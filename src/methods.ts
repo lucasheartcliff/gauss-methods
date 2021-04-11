@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { isNumber } from "lodash";
 import { Parameters } from "./types";
 
 const getInitialValue = (matrix: number[][]) => {
@@ -19,6 +19,41 @@ const getMaxValueFromArray = (arr: number[]) => {
   }, -1);
 };
 
+const isPossible = (matrix: number[][]) => {
+  let isPossible = true;
+  for (let i in matrix) {
+    let rowSum = 0;
+    let colSum = 0;
+    for (let j in matrix[i]) {
+      if (i !== j) {
+        rowSum += matrix[i][j];
+        colSum += matrix[j][i];
+      }
+    }
+    isPossible =
+      Math.abs(rowSum) <= Math.abs(matrix[i][i]) ||
+      Math.abs(colSum) <= Math.abs(matrix[i][i]);
+    if (!isPossible) return false;
+  }
+  return isPossible;
+};
+
+const sassenfeldCriteria = (matrix: number[][]) => {
+  let values: number[] = [];
+  for (let i in matrix) {
+    let sum = 0;
+    for (let j in matrix[i]) {
+      if (i !== j && !isNumber(values[j])) {
+        sum += matrix[i][j];
+      } else if (i !== j) {
+        sum += matrix[i][j] * values[j];
+      }
+    }
+    values[i] = sum / (matrix[i][i] || 1);
+  }
+  return getMaxValueFromArray(values) < 1;
+};
+
 export const jacobi = ({
   initialValue: initialValueParameter,
   toleranceValue,
@@ -26,30 +61,75 @@ export const jacobi = ({
   result: resultParameter,
   matrix
 }: Parameters) => {
-  let oldValue = initialValueParameter || getInitialValue(matrix);
-
   let index = 0;
   let newValues = [];
-  while (index < maxIterations) {
-    newValues = [];
-    for (let i = 0; i < matrix.length; i++) {
-      let sum = 0;
-      for (let j = 0; j < matrix[i].length; j++) {
-        if (i !== j) {
+  if (isPossible(matrix) || sassenfeldCriteria(matrix)) {
+    let oldValue = initialValueParameter || getInitialValue(matrix);
+
+    while (index < maxIterations) {
+      newValues = [];
+      for (let i = 0; i < matrix.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (i !== j) {
             sum += matrix[i][j] * oldValue[j] * -1;
+          }
         }
+        newValues[i] = (sum + resultParameter[i]) / matrix[i][i] || 1;
       }
-      newValues[i] = (sum + resultParameter[i]) / matrix[i][i] || 1;
+      for (let i = 0; i < matrix.length; i++) {
+        if (
+          Math.abs(newValues[i] - oldValue[i]) /
+            getMaxValueFromArray(oldValue) <=
+          toleranceValue
+        )
+          return { result: newValues, index };
+      }
+      oldValue = _.cloneDeep(newValues);
+      index++;
     }
-    for (let i = 0; i < matrix.length; i++) {
-      if (
-        Math.abs(newValues[i] - oldValue[i]) / getMaxValueFromArray(oldValue) <=
-        toleranceValue
-      )
-        return { result: newValues, index };
-    }
-    oldValue = _.cloneDeep(newValues);
-    index++;
   }
-  return { result: newValues, index };
+  return { result: newValues.length ? newValues : null, index };
+};
+
+export const seidel = ({
+  initialValue: initialValueParameter,
+  toleranceValue,
+  maxIterations,
+  result: resultParameter,
+  matrix
+}: Parameters) => {
+  let index = 0;
+  let newValues = [];
+
+  if (isPossible(matrix)) {
+    let oldValue = initialValueParameter || getInitialValue(matrix);
+    while (index < maxIterations) {
+      newValues = [];
+      for (let i = 0; i < matrix.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (i !== j) {
+            if (!isNumber(newValues[j])) {
+              sum += matrix[i][j] * oldValue[j] * -1;
+            } else {
+              sum += matrix[i][j] * newValues[j] * -1;
+            }
+          }
+        }
+        newValues[i] = (sum + resultParameter[i]) / matrix[i][i] || 1;
+      }
+      for (let i = 0; i < matrix.length; i++) {
+        if (
+          Math.abs(newValues[i] - oldValue[i]) /
+            getMaxValueFromArray(oldValue) <=
+          toleranceValue
+        )
+          return { result: newValues, index };
+      }
+      oldValue = _.cloneDeep(newValues);
+      index++;
+    }
+  }
+  return { result: newValues.length ? newValues : null, index };
 };

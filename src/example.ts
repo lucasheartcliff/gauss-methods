@@ -14,3 +14,15 @@ export const jacobiExample: Parameters = {
   maxIterations: 6,
   toleranceValue: 0.05
 };
+
+export const seidelExample: Parameters = {
+  matrix: [
+    [10, 2, 1],
+    [1, 5, 1],
+    [2, 3, 10]
+  ],
+  result: [7, -8, 6],
+  initialValue: [0.7, -1.6, 0.6],
+  maxIterations: 6,
+  toleranceValue: 0.05
+};

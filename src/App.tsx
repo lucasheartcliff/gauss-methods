@@ -1,10 +1,12 @@
-import { jacobi } from "./methods";
-import { jacobiExample } from "./example";
+import { jacobi, seidel } from "./methods";
+import { jacobiExample, seidelExample } from "./example";
 import "./styles.css";
 
 export default function App() {
   const { result, index } = jacobi(jacobiExample);
   console.log("result", result, index);
+  const { result:resultS, index:indexS } = seidel(seidelExample);
+  console.log("resultS", resultS, indexS);
 
   return (
     <div className="App">
