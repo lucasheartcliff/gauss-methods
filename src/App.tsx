@@ -3,7 +3,6 @@ import { jacobi, seidel } from "./methods";
 import { jacobiExample, seidelExample } from "./example";
 import Matrix from "./components/Matrix/Matrix";
 import { Parameters } from "./types";
-import { initial } from "lodash";
 
 import * as G from "./styled";
 import Column from "./components/Matrix/Column";
