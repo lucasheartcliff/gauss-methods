@@ -46,11 +46,15 @@ export default function App() {
             </G.MatrixRow>
             <G.Summary>
               <G.SummaryItem>
-                <span>{"Tolerância de Erro:"}</span>
+                <span>{"Máximo de Iterações: "}</span>
+                {parameter.maxIterations || "---"}
+              </G.SummaryItem>
+              <G.SummaryItem>
+                <span>{"Tolerância de Erro: "}</span>
                 {parameter.toleranceValue}
               </G.SummaryItem>
               <G.SummaryItem>
-                <span>{"Iterações:"}</span>
+                <span>{"Iterações: "}</span>
                 {index}
               </G.SummaryItem>
             </G.Summary>
