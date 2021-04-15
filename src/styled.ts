@@ -12,12 +12,15 @@ export const MatrixRow = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  margin-bottom: 5px;
 `;
 export const Title = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   width: 100%;
+  font-size: 20px;
+  margin-bottom: 10px;
 `;
 export const Summary = styled.div`
   display: flex;
