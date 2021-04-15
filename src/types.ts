@@ -1,5 +1,5 @@
 export interface Parameters {
-  maxIterations: number;
+  maxIterations?: number;
   result: number[];
   toleranceValue: number;
   matrix: number[][];

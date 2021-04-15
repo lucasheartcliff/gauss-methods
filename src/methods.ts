@@ -1,4 +1,4 @@
-import _, { isNumber } from "lodash";
+import _, { isNumber, isUndefined } from "lodash";
 import { Parameters } from "./types";
 
 const getInitialValue = (matrix: number[][]) => {
@@ -66,7 +66,7 @@ export const jacobi = ({
   if (isPossible(matrix) || sassenfeldCriteria(matrix)) {
     let oldValue = initialValueParameter || getInitialValue(matrix);
 
-    while (index < maxIterations) {
+    while (isUndefined(maxIterations) || index < maxIterations) {
       newValues = [];
       for (let i = 0; i < matrix.length; i++) {
         let sum = 0;
@@ -104,7 +104,7 @@ export const seidel = ({
 
   if (isPossible(matrix)) {
     let oldValue = initialValueParameter || getInitialValue(matrix);
-    while (index < maxIterations) {
+    while (isUndefined(maxIterations) || index < maxIterations) {
       newValues = [];
       for (let i = 0; i < matrix.length; i++) {
         let sum = 0;

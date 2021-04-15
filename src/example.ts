@@ -7,22 +7,16 @@ export const jacobiExample: Parameters = {
     [-3, 1, 9]
   ],
   result: [14, -1, 9],
-
-  // matrix: [[10, 2, 1], [1, 5, 1], [2, 3, 10]],
-  // result: [7, -8, 6],
-  // initialValue: [0.7, -1.6, 0.6],
   maxIterations: 6,
   toleranceValue: 0.05
 };
 
 export const seidelExample: Parameters = {
   matrix: [
-    [10, 2, 1],
-    [1, 5, 1],
-    [2, 3, 10]
+    [7, 1, -1],
+    [1, 8, 1],
+    [2, -1, 5]
   ],
-  result: [7, -8, 6],
-  initialValue: [0.7, -1.6, 0.6],
-  maxIterations: 6,
-  toleranceValue: 0.05
+  result: [13, 30, 21],
+  toleranceValue: 0.001
 };
