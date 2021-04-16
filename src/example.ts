@@ -7,8 +7,8 @@ export const jacobiExample: Parameters = {
     [-3, 1, 9]
   ],
   result: [14, -1, 9],
-  maxIterations: 6,
-  toleranceValue: 0.05
+  maxIterations: 2,
+  toleranceValue: 0.0
 };
 
 export const seidelExample: Parameters = {

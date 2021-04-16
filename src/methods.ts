@@ -65,7 +65,7 @@ export const jacobi = ({
   if (isPossible(matrix) || sassenfeldCriteria(matrix)) {
     let oldValue = initialValueParameter || getInitialValue(matrix);
 
-    while (isUndefined(maxIterations) || index < maxIterations) {
+    while (isUndefined(maxIterations) || index <= maxIterations - 1) {
       newValues = [];
       for (let i = 0; i < matrix.length; i++) {
         let sum = 0;
@@ -74,7 +74,7 @@ export const jacobi = ({
             sum += matrix[i][j] * oldValue[j] * -1;
           }
         }
-        newValues[i] = (sum + resultParameter[i]) / matrix[i][i] || 1;
+        newValues[i] = (sum + resultParameter[i]) / matrix[i][i];
       }
       for (let i = 0; i < matrix.length; i++) {
         if (
@@ -103,7 +103,7 @@ export const seidel = ({
 
   if (isPossible(matrix)) {
     let oldValue = initialValueParameter || getInitialValue(matrix);
-    while (isUndefined(maxIterations) || index < maxIterations) {
+    while (isUndefined(maxIterations) || index <= maxIterations - 1) {
       newValues = [];
       for (let i = 0; i < matrix.length; i++) {
         let sum = 0;
@@ -116,7 +116,7 @@ export const seidel = ({
             }
           }
         }
-        newValues[i] = (sum + resultParameter[i]) / matrix[i][i] || 1;
+        newValues[i] = (sum + resultParameter[i]) / matrix[i][i];
       }
       for (let i = 0; i < matrix.length; i++) {
         if (
