@@ -26,13 +26,12 @@ const isPossible = (matrix: number[][]) => {
     let colSum = 0;
     for (let j in matrix[i]) {
       if (i !== j) {
-        rowSum += matrix[i][j];
-        colSum += matrix[j][i];
+        rowSum += Math.abs(matrix[i][j]);
+        colSum += Math.abs(matrix[j][i]);
       }
     }
     isPossible =
-      Math.abs(rowSum) <= Math.abs(matrix[i][i]) ||
-      Math.abs(colSum) <= Math.abs(matrix[i][i]);
+      rowSum <= Math.abs(matrix[i][i]) || colSum <= Math.abs(matrix[i][i]);
     if (!isPossible) return false;
   }
   return isPossible;
