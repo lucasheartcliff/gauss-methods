@@ -1,12 +1,11 @@
 import React from "react";
 import * as S from "./styled";
 interface Props {
-  multiplier?: number;
   row?: number;
   col?: number;
+  value: string;
 }
-const Cell: React.FC<Props> = ({ col, row, multiplier = 0 }) => {
-  const value = `${multiplier}X`;
+const Cell: React.FC<Props> = ({ value, col, row }) => {
   const coordenates = `${row}${col}`;
   return (
     <S.Cell>

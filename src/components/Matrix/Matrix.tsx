@@ -19,7 +19,7 @@ const Matrix: React.FC<Props> = ({ data, result }) => {
                 key={`${rowIndex}-${colIndex}`}
                 row={rowIndex}
                 col={colIndex}
-                multiplier={value}
+                value={`${value}*X${colIndex}`}
               />
             ))}
           </S.Row>

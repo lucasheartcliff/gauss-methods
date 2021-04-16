@@ -38,7 +38,9 @@ export default function App() {
             <G.MatrixRow>
               <Matrix data={parameter.matrix} result={parameter.result} />
               {result ? (
-                <Column data={result?.map((v) => v.toFixed(4))} />
+                <Column
+                  data={result?.map((v, i) => `X${i} = ${v.toFixed(4)}`)}
+                />
               ) : (
                 "Não converge"
               )}
